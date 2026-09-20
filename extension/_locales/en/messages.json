@@ -1,0 +1,11 @@
+{
+  "extensionName": {
+    "message": "Tabtrail"
+  },
+  "extensionDescription": {
+    "message": "Organize tabs into workspaces, review browsing locally, and optionally classify pages with AI."
+  },
+  "actionTitle": {
+    "message": "Open the Tabtrail side panel"
+  }
+}

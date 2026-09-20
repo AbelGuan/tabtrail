@@ -1,0 +1,45 @@
+import assert from 'node:assert/strict';
+import path from 'node:path';
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const context=await chromium.launchPersistentContext('',{...(process.env.CHROMIUM_EXECUTABLE?{executablePath:process.env.CHROMIUM_EXECUTABLE}:{}),headless:true,ignoreDefaultArgs:['--disable-extensions'],args:[`--load-extension=${path.resolve('extension')}`,`--disable-extensions-except=${path.resolve('extension')}`]});
+try {
+ const worker=context.serviceWorkers()[0] || await context.waitForEvent('serviceworker',{timeout:15000});
+ const id=new URL(worker.url()).hostname;
+ console.log('Loaded unpacked extension in isolated Chrome.');
+ await context.route('https://example.com/**',route=>route.fulfill({contentType:'text/html',body:'<title>Video research</title><h1>Example</h1>'}));
+ const source=await context.newPage();await source.goto('https://example.com/research');
+ const duplicate=await context.newPage();await duplicate.goto('https://example.com/research');
+ const dashboard=await context.newPage();const errors=[];dashboard.on('pageerror',e=>errors.push(e.message));
+ await dashboard.goto(`chrome-extension://${id}/dashboard.html`);
+ await dashboard.locator('.tab-row').first().waitFor();
+ assert.equal(await dashboard.locator('.tab-row').count(),1);
+ assert.equal(await dashboard.locator('#demo-banner').isVisible(),false);
+ await dashboard.locator('.tab-row').first().hover();await dashboard.locator('.tab-more').first().click();await dashboard.locator('#tab-form .primary').click();
+ await dashboard.waitForFunction(()=>!document.querySelector('#tab-dialog[open]')); 
+ const message=msg=>dashboard.evaluate(async msg=>{const response=await chrome.runtime.sendMessage(msg);if(response.error)throw new Error(response.error);return response.value;},msg);
+ let state=await message({type:'get'});assert.equal(Object.hasOwn(state.records[0],'status'),false);
+ await message({type:'key',value:'fake-key-for-intercepted-test'});
+ await dashboard.route('https://api.deepseek.com/chat/completions',async route=>{
+  const input=JSON.parse(route.request().postData());const data=JSON.parse(input.messages[1].content);
+  assert.equal(data.tabs.length,1);assert.ok(!JSON.stringify(data).includes('/research'));
+  await route.fulfill({contentType:'application/json',body:JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify({assignments:data.tabs.map(t=>({id:t.id,group:'视频研究'})),suggestedRules:[{keyword:'Video',group:'视频研究'}]})}}]})});
+ });
+ await dashboard.locator('#more-menu summary').click();await dashboard.locator('#refresh').click();
+ await dashboard.waitForFunction(()=>document.querySelector('.card-heading h2')?.textContent==='视频研究');await dashboard.locator('#more-menu summary').click();await dashboard.locator('#rules-button').click();
+ await dashboard.locator('#rules-dialog[open]').waitFor();
+ assert.equal(await dashboard.locator('#saved-rules .rule-row').count(),0);
+ await dashboard.locator('#suggested-rules').getByRole('button',{name:'确认保存'}).click();
+ await dashboard.locator('#saved-rules .rule-row').waitFor();
+ await dashboard.locator('[data-close="rules-dialog"]').click();
+ state=await message({type:'get'});assert.equal(state.records[0].group,'视频研究');assert.equal(Object.hasOwn(state.records[0],'status'),false);
+ await source.close();await duplicate.close();await dashboard.locator('#more-menu summary').click();await dashboard.locator('#refresh').click();
+ assert.equal(await dashboard.locator('.tab-row').count(),0);
+ await dashboard.locator('#continue-browsing').click();await dashboard.locator('#day').fill(state.today);assert.equal(await dashboard.locator('.tab-row').count(),1);
+ await dashboard.locator('.tab-link').click();
+ await dashboard.waitForFunction(async()=>{const result=await chrome.runtime.sendMessage({type:'get'});return result.value.tabs.some(t=>t.url==='https://example.com/research');});
+ state=await message({type:'get'});
+ await message({type:'settings',expectedSettings:JSON.stringify([state.config.recording,state.config.excluded,state.config.provider,state.config.model,state.config.idleSeconds]),value:{...state.config,excluded:['example.com']}});
+ assert.equal((await message({type:'get'})).records.length,0);
+ assert.deepEqual(errors,[]);
+ console.log('Extension smoke passed: MV3 worker, real tabs, URL deduplication, legacy status removal, AI flow (mock network), confirmed rules, closed-page recap, reopen, exclusion; no dashboard errors.');
+} finally {await context.close();}
