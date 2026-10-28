@@ -56,7 +56,10 @@ macOS／Linux：
 
 ```sh
 PREVIEW_URL=http://127.0.0.1:4173 node scripts/ui-check.mjs
+PREVIEW_URL=http://127.0.0.1:4173 node scripts/history-check.mjs
+PREVIEW_URL=http://127.0.0.1:4173 node scripts/design-check.mjs
 PREVIEW_URL=http://127.0.0.1:4173 node scripts/review-check.mjs
+PREVIEW_URL=http://127.0.0.1:4173 node scripts/daylight-saving-check.mjs
 PREVIEW_URL=http://127.0.0.1:4173 node scripts/language-check.mjs
 ```
 
@@ -65,6 +68,8 @@ Windows PowerShell：
 ```powershell
 $env:PREVIEW_URL = 'http://127.0.0.1:4173'
 node scripts/ui-check.mjs
+node scripts/history-check.mjs
+node scripts/design-check.mjs
 node scripts/review-check.mjs
 node scripts/language-check.mjs
 ```

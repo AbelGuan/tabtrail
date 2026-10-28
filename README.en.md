@@ -1,12 +1,12 @@
-# Tabtrail
+# Pickmark · 拾签
 
 [简体中文](README.md) | **English**
 
 **Organize scattered tabs into topic workspaces, retrace your browsing, and pick up where you left off.**
 
-Tabtrail is a desktop Chrome extension. It displays your open pages in topic cards, with local keyword rules and optional AI classification. It also keeps daily page lists and estimated browsing time on your device, helping you find your way back to earlier pages.
+Pickmark (formerly Tabtrail) is a desktop Chrome extension. It organizes tabs and bookmarks into categories, with local keyword rules, manual adjustments, and optional AI classification. It also keeps daily page lists and estimated browsing time on your device, helping you find your way back to earlier pages. The GitHub repository retains the `tabtrail` name.
 
-Current version: **0.1.0 · Experimental**. It is not yet available in the Chrome Web Store; install it from source using the steps below. AI features require your own provider API key. Local rules, manual classification, daily review, and resume browsing work without AI.
+Current version: **0.1.6 · Local preview release**. It is not yet available in the Chrome Web Store. Install from source or the release ZIP; existing users should follow the [in-place update guide (Chinese)](docs/INSTALL-UPDATE-0.1.6.md). AI features require your own provider API key. Local rules, manual classification, daily review, and resume browsing work without AI.
 
 ![Workspaces demo: open tabs organized into topic cards](docs/dashboard-preview-en.png)
 
@@ -14,13 +14,13 @@ Browse your open pages by topic and click a page to return to its tab.
 
 *Screenshots and the web demo use familiar websites and independently written fictional titles. They do not use personal browsing history or represent those websites’ current pages. Classifications, browsing paths, and durations are sample data, not evidence of real AI classification quality. The English screenshots use translated sample titles and workspace names; switching the extension language does not translate your own page titles or workspace names.*
 
-## Why Tabtrail exists
+## Why Pickmark exists
 
-Tabtrail began with a familiar problem for its developer: opening many tabs throughout the day, starting with one question, then being drawn toward something else. By evening, the browser still held plenty of pages, but it was hard to remember where that day’s attention had gone or how one topic had led to another.
+Pickmark began with a familiar problem for its developer: opening many tabs throughout the day, starting with one question, then being drawn toward something else. By evening, the browser still held plenty of pages, but it was hard to remember where that day’s attention had gone or how one topic had led to another.
 
 The original idea was called **Attention Atlas**: leaving a few traces that help you look back at the different things that caught your attention. The question was not only how to tidy up tabs, but also what you explored, where your thinking went, and which page you wanted to return to next.
 
-**Tabtrail is the extension’s name; Attention Atlas remains its inspiration and vision.** The current version supports your own reflection through topic workspaces, estimated browsing time, and page-switching paths. These records do not directly measure attention or automatically judge focus, distraction, or task completion. The vision is not a claim that these capabilities already exist.
+**Pickmark is the extension’s current name; Attention Atlas remains its inspiration and vision.** The current version supports your own reflection through topic workspaces, estimated browsing time, and page-switching paths. These records do not directly measure attention or automatically judge focus, distraction, or task completion. The vision is not a claim that these capabilities already exist.
 
 ## What you can do
 
@@ -30,10 +30,11 @@ The original idea was called **Attention Atlas**: leaving a few traces that help
 | Automatic organization | While the workspace is visible and recording is enabled, apply local rules first, then use configured AI for pages that need classification |
 | Daily review | Explore time distribution by website or workspace, inspect switching paths by hour or 15-minute interval, and open pages from the details view |
 | Resume browsing | Start with yesterday’s page list or select another date; reopen listed pages that are no longer open |
-| Rules and preferences | Edit, reorder, and back up keyword rules; apply AI classification preferences for the current browser session or save them for future sessions |
-| Interface and controls | Chinese / English; classic / rounded layouts; light / dark / system theme; workspace management, ordering, and card resizing |
+| Bookmark categories | Read bookmarks after permission is granted; save categories independently without moving original folders; confirm the scope before using bookmark AI |
+| Categories and rules | Switch between tabs and bookmarks to manage their categories and rules independently; back up rules and set AI preferences |
+| Interface and controls | Chinese / English; compact list / comfortable list / preview gallery; light / dark / system theme; About & help and a replayable introduction |
 
-Organization happens inside the extension panel. Existing browser tab order and tab groups stay as they are. Tabtrail does not automatically close tabs or replace your new-tab page.
+Organization happens inside the extension panel. Existing browser tab order and tab groups stay as they are. Pickmark does not automatically close tabs or replace your new-tab page.
 
 A daily list means “pages that were open when collected,” **not pages you necessarily read**. Time estimates and switching paths help you review your browsing; they do not judge your focus or productivity. There are currently no AI daily summaries, notes, task statuses, cloud sync, or user accounts.
 
@@ -58,11 +59,11 @@ Use a recent desktop version of Chrome. You do not need Node.js, Python, or term
 1. On this repository’s page, select **Code → Download ZIP**. Extract it to a folder you plan to keep.
 2. Open `chrome://extensions` in Chrome and enable **Developer mode** in the upper-right corner.
 3. Click **Load unpacked** and select the project’s **`extension` folder**. This folder should directly contain `manifest.json`.
-4. Pin Tabtrail from Chrome’s Extensions menu, then click its icon to open the side panel.
-5. Click the logo at the upper left of the side panel to open the dashboard in a full browser tab.
-6. Select **English** at the top of the dashboard if needed. The extension supports both Chinese and English.
+4. Pin Pickmark from Chrome’s Extensions menu, then click its icon to open the full dashboard. If it is already open, the existing dashboard tab is brought forward.
+5. To use the side panel, select Pickmark from Chrome’s side panel selector.
+6. Select **English** in Settings if needed. The extension supports both Chinese and English.
 
-If this repository’s Releases page offers `tabtrail-VERSION.zip`, you can download and extract that package, then load its extracted folder directly. This differs from GitHub’s automatically generated **Source code (zip)**, which contains the entire project and requires you to select its `extension` subfolder.
+If this repository’s Releases page offers `Pickmark-VERSION.zip`, you can download and extract that package, then load its extracted folder directly. This differs from GitHub’s automatically generated **Source code (zip)**, which contains the entire project and requires you to select its `extension` subfolder.
 
 **Updating an existing installation:** replace the extension files in the original installation folder, click **Reload** on Chrome’s extensions page, and reopen the panel. When video-detection scripts change, refresh any open pages you are testing. Do not uninstall and reinstall to update: uninstalling deletes the extension’s local data.
 
@@ -70,9 +71,10 @@ If this repository’s Releases page offers `tabtrail-VERSION.zip`, you can down
 
 Open a few regular web pages, then open the extension’s workspace. Without configured rules or AI, pages generally appear in **Unsorted**.
 
-- **Start with local rules:** click **Use local rules**, add keywords, and choose a workspace. Keywords match page titles and domains, with no AI charges.
-- **Enable AI classification:** click **Set up AI**, choose a provider, and enter your API key and model name. You can test the connection before saving. The connection test itself may incur a small charge.
-- **Adjust a result:** change a page’s workspace in its details. Use **More → Manage workspaces** to create, rename, or delete workspaces. Deleting a workspace moves its pages elsewhere; it does not close browser tabs.
+- **Start with local rules:** open **Categories & rules**, choose tabs or bookmarks, add keywords, and select a category. Keywords match page titles and domains, with no AI charges.
+- **Enable AI classification:** choose a provider and enter your API key and model in Settings. You can test the connection before saving. The test itself may incur a small charge. Bookmark AI requires a separate scope confirmation.
+- **Adjust a result:** manually change a page’s category, or create, rename, and delete categories in **Categories & rules**. Deleting a category does not close tabs or delete original bookmarks; the confirmation explains how page assignments are handled.
+- **Classify historical pages:** select a date in **Resume**, click **Classify unsorted**, and confirm the scope. Local rules run first; optionally use AI for the remaining pages. Existing categories and manual assignments are preserved without reopening tabs. Retry after a failure to process the remainder; search narrows the scope.
 - **Reclassify pages:** choose **More → Regroup**, review the scope, and confirm. This can also change manual assignments. Use search to narrow the scope.
 
 Available adapters include DeepSeek, OpenAI, Anthropic Claude, Google Gemini, Qwen (Bailian, Beijing), and Kimi (China). Model names are editable; successful requests depend on your account, the model, and your network. Additional provider notes are available in the [AI configuration guide (Chinese)](docs/AI-PROVIDERS.md).
@@ -91,7 +93,7 @@ Routine automatic organization preserves manual assignments. Closing a tab chang
 
 | Data | Current handling |
 | --- | --- |
-| Page lists | Titles, full URLs, workspace assignments, and related fields; up to the most recent 30 local calendar days and 5,000 daily page records |
+| Page lists | Titles, full URLs, workspace assignments, and related fields; up to the most recent 30 local calendar days and 5,000 daily page records, with an additional storage budget of about 4 MB |
 | Browsing visits | Estimated foreground page time and switching order; up to 30 days and 12,000 visits, with an additional estimated storage budget of about 4 MB |
 | AI classification input | Titles, domains, random record IDs, workspace names and reference pages, confirmed rules, and applied preferences; no separate full-URL field, page body text, or browsing duration |
 | API keys | Stored locally per provider and retained across restarts; excluded from rule backups and not protected by operating-system keychain encryption |
@@ -132,7 +134,7 @@ Open [the local preview](http://localhost:4173/dashboard.html). Stop the server 
 npm run package
 ```
 
-The package is written to `dist/tabtrail-0.1.0.zip`. Neither previewing nor packaging publishes anything to GitHub.
+The package is written to `dist/Pickmark-0.1.6.zip`, with a SHA256 checksum file. Neither previewing nor packaging publishes anything to GitHub.
 
 For additional preview, browser-test, and packaging instructions, see the [contributing guide (Chinese)](CONTRIBUTING.md). Report ordinary issues and suggestions in this repository’s Issues section. Use fictional pages to reproduce problems, and do not upload API keys or private browsing records.
 

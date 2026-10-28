@@ -1,0 +1,391 @@
+/* Production adapters. OFFSET tokens and row geometry remain in offset-theme.css. */
+html body #mono-hero .hero-icon svg{display:block;width:46px;height:46px;stroke-width:1.15}
+html body #mono-hero .hero-icon .hero-flow{display:block;width:var(--dmh,46px);height:var(--dmh,46px);transform:scale(1.24);pointer-events:none}
+html body #mono-hero .hero-stat .hero-count{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;font-size:42px;letter-spacing:-2px;line-height:1;font-weight:400}
+html body .brand-logo{color:var(--rail-ink)}
+html body #brand .brand-logo svg{color:var(--ink)}
+@media(max-width:700px){html body #mono-hero .hero-icon svg{width:34px;height:34px}html body #mono-hero .hero-stat .hero-count{font-size:28px;letter-spacing:-1px}}
+@media(max-width:360px){html body #mono-hero .hero-stat .hero-count{font-size:24px}}
+html body #top-help{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:32px;padding:6px 10px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-size:12px;white-space:nowrap;border-radius:0}
+html body #top-help svg{width:15px;height:15px;flex-shrink:0}
+html body #top-help:hover{background:var(--paper);color:var(--ink)}
+html body #settings-form .settings-section{scroll-margin-top:90px}
+html body #pickmark-guide .dialog-actions{flex-wrap:wrap;gap:8px}
+html body.tour-active #rail{transition:none}
+html body #pickmark-guide[open]{position:fixed;inset:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;padding:0;border:0;background:transparent;overflow:hidden}
+html body.tour-active #pickmark-guide::backdrop{background:transparent;backdrop-filter:none}
+html body #pickmark-guide .tour-ring{box-sizing:border-box;position:absolute;border:2px solid var(--ink);box-shadow:0 0 0 9999px #0009;pointer-events:none}
+html body #pickmark-guide:has(.tour-ring[hidden]){background:#0009}
+html body #pickmark-guide .tour-card{box-sizing:border-box;position:absolute;width:min(420px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:24px;background:var(--paper);color:var(--ink);border:1px solid var(--line);box-shadow:0 12px 40px #0003;animation:tour-enter .18s ease-out}
+html body #pickmark-guide .tour-pointer{position:absolute;width:12px;height:12px;background:var(--paper);transform:rotate(45deg);pointer-events:none}
+html body #pickmark-guide .dialog-heading{gap:12px;margin:0 0 20px}
+html body #pickmark-guide .tour-example{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border:1px solid var(--line);background:var(--surface)}
+html body #pickmark-guide .tour-example small{display:block;margin-top:6px;color:var(--muted);font-size:11px}
+html body #pickmark-guide [data-example]{min-width:36px;min-height:36px;border:1px solid var(--ink);animation:tour-emphasis .8s ease-in-out 2}
+html body #pickmark-guide .tour-example-menu{padding:14px;font-size:12px;line-height:1.8;border:1px solid var(--line)}
+@keyframes tour-enter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tour-emphasis{50%{box-shadow:0 0 0 3px var(--line)}}
+@media(prefers-reduced-motion:reduce){html body #pickmark-guide :is(.tour-card,[data-example]){animation:none}}
+@media(max-width:600px){html body #top-help{padding:5px;font-size:10px}html body #pickmark-guide .tour-card{padding:20px}html body .app .top-tools{gap:4px}}
+html body :is(#pickmark-about,#pickmark-guide){box-sizing:border-box;width:min(600px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:28px;border:1px solid var(--line);border-radius:0;background:var(--paper);color:var(--ink);overflow:auto}
+html body :is(#pickmark-about,#pickmark-guide)::backdrop{background:#0008;backdrop-filter:blur(4px)}
+html body :is(#pickmark-about,#pickmark-guide) p{font-size:13px;line-height:1.8}
+html body :is(#pickmark-about,#pickmark-guide) h2{font-size:24px;line-height:1.4}
+html body :is(#pickmark-about,#pickmark-guide) h3{font-size:14px}
+html body #pickmark-about .help-identity{padding:20px 0 28px;border-bottom:1px solid var(--line)}
+html body #pickmark-about .help-identity strong{font-size:32px}
+html body #pickmark-about .help-links{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 0}
+html body #pickmark-about :is(.help-support,.help-guide){padding:20px 0;border-top:1px solid var(--line)}
+html body #pickmark-about .help-qr{display:grid;place-items:center;width:160px;min-height:120px;border:1px dashed var(--line);padding:12px;font-size:12px;text-align:center;color:var(--muted)}
+html body #pickmark-guide .dialog-heading{align-items:center}
+html body #pickmark-guide .dialog-heading .mono{font-size:11px;line-height:16px;letter-spacing:.06em;color:var(--muted)}
+html body #pickmark-guide [data-skip]{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:32px;padding:0 4px;margin-right:-4px;font-size:11px;font-weight:400;line-height:16px;border:0;border-radius:0;background:transparent;color:var(--muted)}
+html body #pickmark-guide .dialog-actions{display:flex;align-items:center;justify-content:flex-start;flex-wrap:nowrap;gap:8px;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+html body #pickmark-guide .dialog-actions button{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:0 0 auto;height:36px;min-height:36px;padding:0 12px;margin:0;font-size:12px;line-height:16px;font-weight:500;white-space:nowrap;border:1px solid transparent;border-radius:0}
+html body #pickmark-guide :is([data-back],[data-later]){background:transparent;color:var(--muted)}
+html body #pickmark-guide .dialog-actions [data-back]{padding-left:0}
+html body #pickmark-guide [data-back]::before{content:'←';font-size:14px}
+html body #pickmark-guide [data-back]:disabled{visibility:hidden}
+html body #pickmark-guide .dialog-actions :is([data-later],[data-next]){margin-left:auto}
+html body #pickmark-guide .dialog-actions [data-later]+[data-next]{margin-left:0}
+html body #pickmark-guide .dialog-actions button[data-next]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+html body #pickmark-guide .dialog-actions button[data-next]:hover{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+html body #pickmark-guide :is([data-skip],[data-back],[data-later]):hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+html body #pickmark-guide button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media(max-width:360px){html body #pickmark-guide .dialog-actions{gap:4px}html body #pickmark-guide .dialog-actions button{padding-right:8px;padding-left:8px}html body #pickmark-guide [data-back]{padding-left:0}}
+@media(max-width:480px){html body :is(#pickmark-about,#pickmark-guide){padding:20px}html body #pickmark-about .help-links{grid-template-columns:1fr;gap:0}}
+html body #mono-appearance .setting-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:16px;min-height:0;padding:20px 0}
+html body #mono-appearance .setting-row>div{min-width:0}
+html body #mono-appearance .setting-row>button{align-self:start;min-width:56px;margin:0}
+html body #settings-form :is(.appearance-segment,.language-picker){padding:0;background:transparent;gap:0;overflow:hidden;align-items:stretch}
+html body #settings-form .appearance-controls button{min-height:34px;line-height:1.4;margin:0;flex:1;white-space:nowrap}
+html body #settings-form .settings-field label:not(.check){display:flex;flex-direction:column;gap:8px;margin:0 0 8px}
+html body #settings-form .settings-field .help{margin:0}
+html body #settings-form :is(input,select,textarea){border-radius:0}
+html body #classification-navigation button{border-radius:0}
+html body #recap input[type=date]{border-radius:0;background:var(--surface);color:var(--ink);border-color:var(--line)}
+@media(max-width:600px){html body #settings-form .appearance-controls :is(.appearance-segment,.language-picker){width:100%}html body #mono-appearance .setting-row{gap:12px}}
+html body .nav-scroll{-webkit-mask-image:linear-gradient(#000 0,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(#000 0,#000 calc(100% - 22px),transparent)}
+html{--index-row-height:62px;--category-row-height:39px}
+html.dense{--index-row-height:38px}
+html body[data-index-layout=list]{--category-row-height:var(--index-row-height)}
+html body #mono-list .item{height:var(--index-row-height);min-height:var(--index-row-height);max-height:var(--index-row-height)}
+html body .app .nav.cat{height:var(--category-row-height);min-height:var(--category-row-height);max-height:var(--category-row-height);padding-top:0;padding-bottom:0;flex-shrink:0;border-bottom:1px solid transparent;background-clip:padding-box}
+html body #mono-list :is(.row-origin,.row-details){min-height:0;overflow:hidden}
+@media(max-width:700px){html{--index-row-height:65px}html.dense{--index-row-height:44px}}
+html body #appearance-menu{position:fixed;inset:auto;margin:0;width:180px;max-width:calc(100vw - 16px);padding:6px;background:var(--paper);color:var(--ink);border:1px solid var(--line);box-shadow:0 12px 32px #0002}
+html body #appearance-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:10px;font-size:12px;border:0;border-radius:0;background:transparent;color:var(--ink)}
+html body #appearance-menu button:is(:hover,:focus-visible){background:var(--surface);outline-offset:-2px}
+html body #appearance-menu svg{width:16px;height:16px}
+html body #appearance-menu .appearance-check{margin-left:auto;width:16px}
+html body[data-mono-view=workspace] #mono-list .row-details{grid-template-columns:minmax(0,1fr) auto}
+html body[data-mono-view=workspace] #mono-list :is(.row-state,.row-group){display:none}
+html body :is(#mono-book-dialog:has(.book-icon-picker),#workspace-icon-dialog){width:min(480px,calc(100vw - 32px));padding:24px;max-height:calc(100dvh - 32px);overflow:auto}
+html body :is(#mono-book-dialog:has(.book-icon-picker),#workspace-icon-dialog) .dialog-heading{align-items:center;margin-bottom:20px}
+html body :is(#mono-book-dialog:has(.book-icon-picker),#workspace-icon-dialog) .dialog-heading h2{font-size:20px;margin:0}
+html body :is(#mono-book-dialog .book-icon-picker,#workspace-icon-options){display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+html body :is(#mono-book-dialog .book-icon-picker label,#workspace-icon-options .workspace-icon-choice){position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;min-height:76px;min-width:0;margin:0;padding:10px 4px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:10px;text-align:center;cursor:pointer;border-radius:0}
+html body :is(#mono-book-dialog .book-icon-picker label,#workspace-icon-options .workspace-icon-choice):first-child{grid-column:1 / -1;flex-direction:row;min-height:42px;justify-content:flex-start;padding:10px 14px}
+html body #mono-book-dialog .book-icon-picker input{position:absolute;width:1px;height:1px;padding:0;margin:0;opacity:0;clip-path:inset(50%)}
+html body #mono-book-dialog .book-icon-picker label:has(input:checked),html body #workspace-icon-options .workspace-icon-choice[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+html body #mono-book-dialog .book-icon-picker label:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:3px}
+html body #mono-book-dialog:has(.book-icon-picker) .dialog-actions{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);justify-content:flex-end}
+@media(max-width:400px){html body :is(#mono-book-dialog .book-icon-picker,#workspace-icon-options){grid-template-columns:repeat(3,minmax(0,1fr))}}
+html body .nav-dock{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+html body .nav-dock .dock{min-width:0;justify-content:center;padding:10px 4px;gap:7px}
+html body #mono-search-toggle{display:flex;align-items:center;justify-content:center;gap:8px;min-height:32px;line-height:1;padding:0 4px}
+html body #mono-search-toggle>svg{display:block;flex:none;width:16px;height:16px}
+html body #mono-search-toggle>span:not(.key){line-height:16px;white-space:nowrap}
+html body #mono-search-toggle>.key{align-items:center;justify-content:center;height:20px;min-width:30px;line-height:1;font-size:10px;padding:0 5px;letter-spacing:0;white-space:nowrap}
+@media(min-width:701px){html body #mono-search-toggle>.key{display:inline-flex}}
+html body #classification-navigation{margin:0 0 28px;display:flex;flex-direction:column;gap:20px}
+html body #classification-navigation button{background:transparent;color:var(--muted);padding:10px 16px;font-size:12px}
+html body .classification-sources{display:flex;align-self:flex-start;border:1px solid var(--line)}
+html body .classification-sources button[aria-pressed=true]{background:var(--ink)!important;color:var(--paper)!important}
+html body .classification-sections{display:flex;border-bottom:1px solid var(--line);gap:20px}
+html body .classification-sections button{padding:10px 0!important;border-bottom:2px solid transparent}
+html body .classification-sections button[aria-pressed=true]{color:var(--ink)!important;border-bottom-color:var(--ink)}
+/* Legacy dark colors are fallbacks; the OFFSET shell owns its component states. */
+html.night[data-color-scheme=dark]{--dark-surface:var(--surface);--dark-raised:var(--surface);--dark-line:var(--line);--dark-text:var(--ink);--dark-muted:var(--muted)}
+html body .app :is(.brand,.mode,.search-button,.tool,.nav,.dock){background:transparent}
+html body .app .brand{color:var(--rail-ink)}
+html body .app :is(.nav,.dock){color:var(--rail-ink-2)}
+html body .app :is(.nav,.dock):hover:not(.active){background:var(--rail-hover);color:var(--rail-ink)}
+html body .app :is(.nav,.dock).active{background:var(--acid);color:var(--accent-ink)}
+html body .app :is(.tool,.search-button):hover{background:var(--surface)}
+html body .app .mode{color:var(--muted)}
+html body .app .mode.active{color:var(--ink)}
+html body #storage-controls{margin:20px 0;padding:16px;border:1px solid var(--line);min-width:0}
+html body #storage-controls h3{margin-top:0}
+html body #storage-controls .connection-actions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+html body #storage-controls select{max-width:100%}
+html body #mono-list [data-pm=book-ai]{width:auto;white-space:nowrap;padding:5px 8px;font-size:10px}
+html body #book-ai-progress{padding:14px;border:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+html body #book-group-list .book-group-icon{flex:0 0 20px;min-width:20px}
+html body .book-group-icon svg{width:20px;height:20px}
+html body #book-group-list .workspace-name{padding:3px 0;background:none;border:0;text-align:left;cursor:text}
+html body #book-group-list .workspace-name:hover{text-decoration:underline}
+html body #book-group-create{margin-top:24px}
+html body .book-icon-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+html body .book-icon-picker label{display:flex;align-items:center;gap:6px;padding:8px;border:1px solid var(--line);font-size:11px}
+html body .book-icon-picker svg{width:20px;height:20px;flex-shrink:0}
+html body #book-rules-list .rule-row{background:transparent;border-width:0 0 1px}
+html body #book-rule-form label{font-size:11px}
+html body #mono-panel>p.rules-intro{font-size:12px;color:var(--muted);line-height:1.7;margin:0 0 24px}
+html body #mono-panel :is(#book-rule-form,#book-group-create) label{display:block;margin:0 0 16px;font-size:11px}
+html body #mono-panel :is(#book-rule-form,#book-group-create) input,html body #mono-panel .book-rename{display:block;width:100%;min-width:0;margin-top:8px;padding:9px;border:1px solid var(--line);border-radius:0;background:var(--surface);color:var(--ink);font-size:13px;line-height:1.6}
+html body #mono-panel :is(#book-rule-form,#book-group-create) button{padding:10px 14px;border:1px solid var(--line);border-radius:0;font-size:12px}
+html body #mono-panel :is(#book-rule-form,#book-group-create) button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+html body #mono-panel>.rules-disclosure{margin-top:28px;border-top:1px solid var(--line)}
+html body #mono-panel .rules-disclosure>button{padding:9px 12px;margin:8px 8px 16px 0;border:1px solid var(--line);font-size:12px;background:var(--paper);color:var(--ink)}
+html body .bookmark-pager{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:22px 0;border-top:1px solid var(--line);font-size:11px}
+html body .bookmark-pager small{flex-basis:100%;color:var(--muted)}
+html body #mono-list .list-tools{flex-wrap:wrap;row-gap:10px}
+html body #mono-list .view-controls{flex-wrap:wrap}
+html body #mono-list [data-pm=refresh],html body #mono-list [data-pm=regroup]{width:auto;white-space:nowrap;padding:5px 8px;font-size:10px}
+html body #rules-dialog .rules-intro{font-size:12px;color:var(--muted);line-height:1.7;margin:0 0 24px;max-width:680px}
+html body .rules-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:start}
+html body #rules-dialog h3{font-size:13px;margin:0 0 16px;line-height:1.5}
+html body .rules-section-heading{display:flex;justify-content:space-between;gap:12px;border-top:2px solid var(--ink);padding-top:16px}
+html body .rules-section-heading span{font-size:11px;color:var(--muted)}
+html body .rule-editor{border:1px solid var(--line);padding:20px}
+html body #rules-dialog #rule-form{margin:0}
+html body #rules-dialog #rule-form label{margin:0 0 16px;font-size:11px}
+html body #rules-dialog #rule-form .dialog-actions{margin-top:18px;justify-content:flex-start}
+html body .rules-empty{padding:28px 0 32px;color:var(--muted);font-size:12px;line-height:1.8;max-width:320px}
+html body .rules-empty strong{color:var(--ink);font-weight:500}
+html body .rules-empty p{margin:8px 0 0}
+html body #rule-sort-hint{font-size:11px;line-height:1.7;margin:0 0 16px}
+html body .rules-secondary{margin-top:32px;border-top:1px solid var(--line)}
+html body .rules-disclosure{border-bottom:1px solid var(--line);padding:0 0 0}
+html body .rules-disclosure>summary{display:flex;align-items:center;justify-content:space-between;padding:17px 0;font-size:12px;letter-spacing:0;color:var(--ink)}
+html body .rules-disclosure>summary::after{content:'+';font-size:17px;font-weight:400}
+html body .rules-disclosure[open]>summary::after{content:'−'}
+html body .rules-disclosure>form{margin:0 0 20px}
+html body #rules-dialog .rules-disclosure .help{font-size:11px;line-height:1.7;max-width:680px}
+html body .rule-suggestions{margin-top:28px;padding-top:18px}
+html body #saved-rules .rule-row{background:transparent;border-width:0 0 1px;padding:12px 0}
+@media(max-width:1000px){html body .rules-layout{grid-template-columns:1fr;gap:20px}html body .rules-empty{padding:12px 0 20px;max-width:none}html body .rule-editor{padding:18px}}
+html body #workspace-list .workspace-name{display:block;width:auto;max-width:100%;text-align:left;padding:3px 0;border:0;background:none;color:var(--ink);cursor:text}
+html body #workspace-list .workspace-name:hover{text-decoration:underline;text-underline-offset:4px}
+html body .workspace-icon svg{width:20px;height:20px;display:block}
+html body #workspace-list .rule-row{display:flex;align-items:center;gap:12px}
+html body #workspace-list .rule-copy{flex:1;min-width:0;text-align:left}
+html body #workspace-list .workspace-icon{flex:0 0 20px;min-width:20px}
+html body .workspace-menu{position:relative;flex-shrink:0}
+html body .workspace-menu summary{list-style:none;cursor:pointer;padding:6px 12px;font-size:20px}
+html body .workspace-menu summary::-webkit-details-marker{display:none}
+html body .workspace-menu-actions{position:absolute;right:0;top:100%;width:170px;z-index:70;padding:5px;background:var(--paper);border:1px solid var(--line);box-shadow:0 8px 24px #0002}
+html body .workspace-menu-actions button{display:block;text-align:left;width:100%;padding:10px;border:0;background:none;color:var(--ink)}
+html body .workspace-menu-actions button:hover,html body .workspace-menu-actions button:focus-visible{background:var(--ink);color:var(--paper)}
+html body #workspace-icon-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+html body .workspace-icon-choice{display:flex;align-items:center;gap:8px;padding:12px;background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+html body .workspace-icon-choice svg{width:20px;height:20px}
+html body .workspace-icon-choice[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+html body{background:var(--paper);color:var(--ink);font-family:Arial,"PingFang SC","Microsoft YaHei",sans-serif}
+html body .app>.workspace.atlas{max-width:none;margin:0;padding:27px 42px 52px;min-width:0;background:var(--paper)}
+html body .app>.topbar{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;height:76px;margin:0;background:var(--paper);border-radius:0;box-shadow:none;max-width:none;gap:0;padding:0 42px;position:sticky;top:0;z-index:25}
+html body input[type=checkbox]{accent-color:var(--ink)}
+html body .rail .brand{font-size:inherit;gap:12px;background:none;border:0;padding:0;color:var(--ink);width:100%;display:flex;justify-content:flex-start}
+html body .rail .brand-logo{width:40px;height:40px;display:block;margin:0;border-radius:10px}
+html body .rail .brand-logo svg{width:40px;height:40px}
+html body .rail .brand-word{font-size:25px;letter-spacing:2px;font-weight:800}
+html body .rail .brand-cn{font-size:8px;letter-spacing:2px;margin-top:5px}
+html body button{font-family:inherit}
+html body .app .mode{padding:0;height:76px;border:0;border-radius:0;background:none}
+html body .app .top-tools button{border-radius:0}
+html body #workspace-tools{display:none}
+html body #mono-hero .hero{margin:6px 0 28px;padding:6px 0 0;border:0}
+html body .app .nav,html body .app .button,html body .app .dock{border-radius:0}
+html body #mono-hero h1{font-size:24px;line-height:1.3;letter-spacing:0;font-weight:700;color:var(--ink);margin:0}
+html body #mono-hero .hero-stat strong{font-family:inherit}
+html body #mono-list{background:var(--paper);width:100%;min-width:0}
+html body #mono-list .list-tools{position:sticky;top:76px;z-index:15;background:var(--paper);border-top:0}
+html body #mono-list .item{width:100%;border-radius:0;box-shadow:none;margin:0}
+html body #mono-list .item-main{background:none;border:0;border-radius:0;min-width:0}
+html body #mono-list .item-title{font-weight:400}
+html body #mono-list .tool{border:0;background:none;border-radius:0}
+html body #mono-list .item-actions{display:flex}
+html body #mono-list .row-origin,html body #mono-list .row-stripes{border:0;border-radius:0;background:transparent;color:inherit;text-align:left;cursor:pointer}
+html body #mono-list .gallery-card{position:relative;border:0;padding:0;background:transparent;text-align:left}
+html body #mono-list .gallery-open{display:block;width:100%;padding:0;border:0;border-radius:0;background:transparent;color:inherit;text-align:left;cursor:pointer}
+html body #mono-list .gallery-tools{position:absolute;right:4px;bottom:8px;display:flex;gap:4px;background:var(--paper)}
+html body #mono-list .gallery-copy{padding-right:70px}
+html body #mono-list .row-origin:focus-visible,html body #mono-list .row-stripes:focus-visible,html body #mono-list .gallery-open:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+html body #mono-list .row-group{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+html body .row-state{color:var(--muted);font-size:10px;white-space:nowrap;align-self:center}
+html body [hidden]{display:none!important}
+html body #recap{margin:0 0 12px;background:none;border:0;border-radius:0;padding:0;box-shadow:none}
+html body #recap .recap-identity,html body #recap-summary,html body #review-metrics{display:none}
+html body #recap .recap-heading{display:flex;justify-content:flex-end;min-width:0}
+html body #recap .recap-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+html body #recap .recap-actions button{font-size:11px;padding:8px 10px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:0}
+html body #recap input{color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:8px;font-size:12px}
+html body #search-toolbar{position:fixed;top:86px;left:calc(var(--rail) + 42px);right:42px;width:auto;z-index:45;background:var(--paper);padding:16px;border:1px solid var(--ink);box-shadow:0 12px 40px #0002;display:flex;gap:12px}
+html body #search-toolbar .search{flex:1;background:var(--paper);border:0}
+html body #search-toolbar #search{width:100%;color:var(--ink);background:transparent}
+html body #search-toolbar .toolbar-note{display:none}
+html body #more-menu summary{width:32px;height:32px;display:grid;place-items:center;padding:5px;border:0;background:transparent;color:var(--ink)}
+html body #more-menu summary svg{width:20px;height:20px}
+html body #more-menu .menu{color:var(--ink);background:var(--paper);border:1px solid var(--line);box-shadow:0 15px 40px #0002;min-width:260px;z-index:60}
+html body #more-menu .menu button{font-size:12px;border:0;background:transparent;color:var(--ink);padding:10px;text-align:left}
+/* Keep the quick preferences in the same monochrome system as the main shell. */
+html body #more-menu .menu{width:320px;min-width:0;padding:8px;border-radius:0;box-shadow:0 12px 30px #00000014}
+html body #more-menu summary{border-radius:0}
+html body #more-menu[open] summary,html body #more-menu summary:hover{background:var(--ink);color:var(--paper)}
+html body #more-menu .menu .appearance-controls{gap:12px;padding:12px 8px 18px;margin:0 0 6px;border-bottom:1px solid var(--line)}
+html body #more-menu .menu .appearance-row{display:grid;grid-template-columns:68px minmax(0,1fr);align-items:center;gap:10px}
+html body #more-menu .menu .appearance-row>span{font-size:11px;line-height:1.4;color:var(--muted)}
+html body #more-menu .menu :is(.appearance-segment,.language-picker){display:flex;width:100%;margin:0;padding:2px;gap:2px;background:var(--paper);border:1px solid var(--line);border-radius:0;box-shadow:none}
+html body #more-menu .menu .appearance-controls button{flex:1;min-width:0;min-height:30px;padding:6px 4px;font-size:11px;line-height:1.3;text-align:center;white-space:nowrap;background:transparent;color:var(--ink);box-shadow:none}
+html body #more-menu .menu .appearance-controls button[aria-pressed=true]{background:var(--ink);color:var(--paper);font-weight:600}
+html body #more-menu .menu>button{width:100%;min-height:38px;padding:10px 8px;border-radius:0}
+html body #more-menu .menu>button:hover{background:var(--ink);color:var(--paper)}
+html body #more-menu .menu button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+html body .nav.cat>svg{width:16px;height:16px;flex:0 0 16px;opacity:.8}
+html body .nav.cat .group-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html body .nav.cat .number{flex-shrink:0;margin-left:auto}
+html body dialog{color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:0;max-width:min(700px,calc(100vw - 32px));padding:28px;max-height:85vh}
+html body dialog h2{font-size:22px;line-height:1.4;letter-spacing:0;color:var(--ink)}
+html body dialog h3{font-size:15px;color:var(--ink);margin:25px 0 12px}
+html body dialog label{font-size:12px;color:var(--ink);display:block;margin:12px 0}
+html body dialog label.check{display:flex;gap:8px;align-items:center}
+html body dialog input:not([type=checkbox]),html body dialog select,html body dialog textarea{font:13px/1.6 inherit;width:100%;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:0;padding:9px}
+html body dialog button{font-size:12px;padding:9px 13px;border:1px solid var(--line);border-radius:0;background:var(--surface);color:var(--ink)}
+html body dialog button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+html body dialog .help,html body .help{font-size:12px;line-height:1.8;color:var(--muted);overflow-wrap:anywhere}
+html body dialog .eyebrow{display:none}
+html body dialog.mono-page{position:static;width:100%;max-width:none;max-height:none;overflow:visible;margin:0;padding:0;border:0;box-shadow:none;background:var(--paper)}
+html body .mono-page>.dialog-heading,html body .mono-page>form>.dialog-heading{display:none}
+html body #settings-form{max-width:1000px}
+html body #settings-form .settings-grid{max-width:none;width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+html body #settings-form .settings-section{min-width:0;border-top:2px solid var(--ink);padding:0}
+html body #settings-form .settings-section>h3:first-child{margin:16px 0 24px}
+html body #settings-form .privacy-box{background:var(--surface);border:1px solid var(--line);color:var(--muted);padding:18px;font-size:12px;line-height:1.8}
+html body .appearance-controls{display:grid;gap:15px;padding:0;margin:0;border:0}
+html body .appearance-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
+html body .appearance-segment,html body .language-picker{display:flex;gap:0;border:1px solid var(--line)}
+html body .appearance-segment,html body .language-picker,html body .appearance-controls button{border-radius:0!important;box-shadow:none}
+html body .appearance-controls button{padding:8px 13px;background:var(--paper);color:var(--ink);border:0;font-size:11px}
+html body .appearance-controls button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+html body .rule-row{color:var(--ink);border:1px solid var(--line);border-radius:0;background:var(--surface)}
+html body .rule-copy{min-width:0;overflow-wrap:anywhere}
+html body .mini-icon{background:none;color:var(--ink);border:0}
+html body #ai-onboarding{margin:8px 0 20px;padding:18px;border:1px solid var(--line);background:var(--surface);border-radius:0;color:var(--ink)}
+html body #ai-onboarding h2{font-size:16px;color:var(--ink)}
+html body #ai-onboarding p{font-size:12px}
+html body #review-dashboard{margin-top:16px}
+html body .rv-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+html body .review-card{width:100%;max-width:none;min-width:0;box-shadow:none;border:0;border-top:2px solid var(--ink);border-radius:0;background:var(--surface);padding:22px;margin:0;color:var(--ink)}
+html body .review-card .card-heading{background:none;border:0;margin-bottom:20px;min-width:0}
+html body .review-card .card-heading h2{font-size:15px;color:var(--ink);white-space:nowrap;margin:0}
+html body .rv-allocation-body{display:flex;flex-direction:column;gap:22px;align-items:stretch}
+html body .rv-distribution-total{display:flex;flex-direction:column;gap:10px}
+html body .rv-distribution-total strong{font-size:44px;line-height:1.2;letter-spacing:-2px;font-weight:700;color:var(--ink)}
+html body .rv-distribution-total strong small{font-size:16px;font-weight:400;letter-spacing:0;margin:0 8px 0 2px}
+html body .rv-hour-summary{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:24px 0}
+html body .rv-hour-summary strong{font-size:48px;line-height:1.2;color:var(--ink);letter-spacing:-2px}
+html body .rv-note,html body .rv-caption,html body .rv-legend-row,html body .rv-hour-summary span{color:var(--muted)}
+html body .rv-distribution-total span{font-size:11px;color:var(--muted)}
+html body .rv-stackbar{display:flex;height:12px;gap:3px;filter:grayscale(1)}
+html body .rv-dot{filter:grayscale(1)}
+html body .rv-section-icon{display:none}
+html body .rv-legend{min-width:0}
+html body .rv-legend-row{display:grid;grid-template-columns:8px minmax(60px,1fr) auto;gap:8px;font-size:11px}
+html body .rv-legend-row>:nth-child(2){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html body .rv-percent,html body .rv-distribution-track{display:none}
+html body .rv-donut{width:170px;height:170px;filter:grayscale(1)}
+html body .rv-donut-core{background:var(--surface);color:var(--ink)}
+html body .rv-hour-fill,html body .rv-hour[aria-pressed=true] .rv-hour-fill{background:var(--ink)}
+html body .rv-hours{display:grid;grid-template-columns:repeat(var(--review-hours,24),minmax(0,1fr));gap:3px}
+html body .rv-hour{min-width:0;background:none;color:var(--muted)}
+html body .rv-hour-label{font-size:9px}
+html body .rv-journey{margin-top:28px}
+html body .rv-journey-tools{display:flex;gap:12px;flex-wrap:wrap}
+html body .rv-toggle{background:none;border:1px solid var(--line);border-radius:0}
+html body .rv-toggle button{color:var(--ink);font-size:11px;border-radius:0}
+html body .rv-toggle button[aria-pressed=true]{background:var(--ink);color:var(--paper);box-shadow:none}
+html body .rv-stop-button,html body .rv-detail{background:var(--paper);color:var(--ink);border-radius:0}
+html body .rv-method{color:var(--muted);font-size:12px;margin-top:20px}
+html body .swimlane{filter:grayscale(1)}
+html body .placeholder-art{background:var(--surface);color:var(--ink);padding:24px;overflow:hidden}
+html body .placeholder-art strong{font-size:22px;line-height:1.4;overflow-wrap:anywhere}
+html body .placeholder-art small{font-size:10px}
+html body #mono-preview .placeholder-art{min-height:260px}
+/* Intentional OFFSET overlap: row labels paint across the preview image. */
+html body #mono-row-menu{position:fixed;margin:0;padding:6px;min-width:170px;border:1px solid var(--line);background:var(--paper);color:var(--ink);box-shadow:0 12px 32px var(--shadow)}
+html body #mono-row-menu button{display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:10px 12px;font-size:12px;cursor:pointer}
+html body #mono-row-menu button:hover,html body #mono-row-menu button:focus-visible{background:var(--ink);color:var(--paper)}
+html body #mono-about{border-top:1px solid var(--line);margin-top:24px;padding-top:24px}
+/* Settings are grouped by task, with one shared save action. */
+html body #settings-form .settings-grid{align-items:start;gap:32px}
+@media(max-width:1100px){html body #settings-form .settings-grid{grid-template-columns:1fr}}
+html body #settings-form #storage-controls{margin:0;padding:0;border:0;border-top:2px solid var(--ink)}
+html body #settings-form #mono-about{grid-column:1 / -1;margin:0}
+html body #settings-form>.dialog-actions{border-top:1px solid var(--line);margin-top:28px;padding-top:20px}
+html body #settings-form .settings-field{border-top:1px solid var(--line);padding-top:20px;margin-top:20px}
+html body #settings-form .settings-disclosure{margin:20px 0}
+html body #settings-form .settings-disclosure summary{cursor:pointer;padding:8px 0}
+html body #settings-form .settings-disclosure>summary{display:flex;align-items:center;justify-content:space-between;list-style:none;font-size:12px;font-weight:600;line-height:1.6;color:var(--ink)}
+html body #settings-form .settings-disclosure>summary::after{content:'+';font-size:18px;font-weight:400}
+html body #settings-form .settings-disclosure[open]>summary::after{content:'−'}
+html body #mono-list .row-group{visibility:hidden}
+html body .app .top-title{display:none!important}
+html body[data-mono-view="settings"] #mono-hero .hero-stat{display:none}
+html body[data-mono-view="rules"] #mono-hero .hero-stat{display:none}
+html body #storage-controls .storage-action{border-top:1px solid var(--line);margin-top:20px;padding-top:20px}
+html body #storage-controls .storage-action h4{font-size:12px;margin:0 0 6px}
+html body #storage-controls .storage-action-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+html body #storage-controls .storage-action-controls select{width:auto;flex:1;min-width:120px}
+html body #storage-controls .storage-action-controls button{margin:0}
+html body .cached-thumbnail{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+html body #mono-preview .cached-thumbnail{max-height:55vh;object-fit:contain}
+html body #toast{background:var(--ink);color:var(--paper);border-radius:0;bottom:40px;z-index:100}
+html body #statusbar{z-index:31;background:var(--paper);color:var(--muted);border-top:1px solid var(--line)}
+@media(max-width:1100px){html body .rv-allocation-body{grid-template-columns:1fr}html body .rv-donut{margin:auto}html body .row-state{display:none}}
+@media(max-width:800px){html body .app>.workspace.atlas{padding:25px 20px 50px}html body .app>.topbar{height:62px;padding:0 18px}html body .app .mode{height:62px}html body #mono-list .list-tools{top:62px}html body #search-toolbar{left:18px;right:18px;top:70px}html body .rv-top{grid-template-columns:1fr}html body .appearance-row{gap:8px}html body .appearance-controls button{padding:8px}html body .rv-allocation-body{grid-template-columns:170px minmax(0,1fr)}}
+@media(max-width:600px){html body .rv-allocation-body{grid-template-columns:1fr}html body .rv-hours{gap:1px}html body .rv-hour-label{font-size:8px}html body .review-card{padding:16px}html body #mono-hero h1{font-size:21px}html body #mono-list .row-state{display:none}html body .dialog-actions{flex-wrap:wrap}html body .appearance-row{display:block}html body .appearance-segment,html body .language-picker{margin-top:8px}html body #recap .recap-actions{justify-content:flex-start}html body #more-menu .menu{max-width:calc(100vw - 30px);right:0}html body #mono-list .view-controls{gap:3px}}
+@media(max-width:800px){html body .app .mobile-menu{display:grid;flex-shrink:0;margin-right:15px}html body #settings-form .settings-grid{grid-template-columns:1fr}html body .app .top-tools{margin-left:auto;gap:6px}}
+
+/* Keep source identity readable before spending space on URLs and decoration. */
+html body #mono-list .row-group{display:none}
+html body #mono-list .row-details{grid-template-columns:minmax(0,1fr) auto auto}
+@media(max-width:1100px){html body #mono-list .row-details{grid-template-columns:minmax(0,1fr) auto}}
+html body #mono-hero .hero{column-gap:18px}
+html body #mono-hero .hero-icon{--dmh:72px;flex-shrink:0}
+html body #mono-hero h1{font-size:22px}
+html body #mono-list .item{grid-template-columns:minmax(180px,25%) 90px minmax(0,1fr)}
+html body #mono-list .row-origin-text{width:100%;gap:10px}
+@media(max-width:1180px){
+ html body #mono-list .item{grid-template-columns:minmax(155px,32%) 48px minmax(0,1fr)}
+ html body #mono-list .item-meta{display:none}
+ html body #mono-list .row-origin-text strong{font-size:12px}
+ html body #mono-list .row-stripes{gap:3px;padding:0 5px}
+}
+@media(max-width:700px){
+ html{--index-row-height:76px}html.dense{--index-row-height:60px}
+ html body #mono-hero .hero{column-gap:12px}
+ html body #mono-hero .hero-icon{--dmh:52px}
+ html body #mono-hero h1{font-size:19px}
+ html body #mono-list .item{grid-template-columns:minmax(0,1fr) 40px 32px;grid-template-rows:1fr 1fr;padding:6px 4px}
+ html body #mono-list .row-origin{visibility:visible;grid-column:1;grid-row:1;padding:0;overflow:hidden}
+ html body #mono-list .row-origin-text{padding:0 6px;gap:10px}
+ html body #mono-list .row-origin .fav{display:inline-grid;margin:0}
+ html body #mono-list .row-origin-text strong{font-size:12px;line-height:20px}
+ html body #mono-list .row-details{display:contents}
+ html body #mono-list .item-main{grid-column:1;grid-row:2;padding:0 6px 0 34px;align-self:stretch}
+ html body #mono-list .item-title{font-size:11px;line-height:18px;opacity:.8}
+ html body #mono-list :is(.row-state,.row-group,.item-meta){display:none}
+ html body #mono-list .item-actions{grid-column:3;grid-row:1/3;justify-content:center}
+ html body #mono-list .row-stripes{visibility:visible;grid-column:2;grid-row:1/3;overflow:hidden;gap:2px;padding:0 3px}
+ html body #mono-list :is(.row-origin,.row-details):before{display:none}
+ html body #mono-list .item:before{content:'';position:absolute;inset:0;background:#fff;mix-blend-mode:difference;transform:scaleX(0);transform-origin:right;transition:transform .4s;pointer-events:none}
+ html body #mono-list .item.is-hovered:before{transform:scaleX(1);transform-origin:left}
+}
+
+/* Compact copy uses the same preview surface and layering. */
+html body #statusbar[hidden]{display:none!important}
+html body .placeholder-art .preview-state{font-size:14px;font-weight:600;line-height:1.5;margin:0 0 8px}
+html body .preview-capture-details{margin-top:10px}
+html body .preview-capture-details summary{font-size:11px;letter-spacing:0;cursor:pointer}
+html body .settings-disclosure summary:focus-visible,html body .preview-capture-details summary:focus-visible{outline:2px solid var(--ink);outline-offset:4px}

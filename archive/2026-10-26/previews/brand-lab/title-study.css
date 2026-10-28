@@ -1,0 +1,6 @@
+.page-switch{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:0 36px 22px;font-size:12px}.page-switch span{color:var(--muted);margin-right:8px}
+.sidebar button.nav{border:0;text-align:left;font:inherit;width:100%;border-radius:0}
+.brand svg{width:28px;height:28px;flex:none}.hero canvas{width:48px;height:48px;flex:none}.hero{gap:8px}.hero>div:not(.count){min-width:0}.hero b{white-space:nowrap}.hero small{line-height:1.6}.hero .count{font-size:23px}
+body[data-focus] .hero canvas{width:64px;height:64px}body[data-focus] .hero b{font-size:22px}body[data-focus] .hero small{font-size:10px}body[data-focus] .brand svg{width:36px;height:36px}
+@media(min-width:721px) and (max-width:1100px){.mock{grid-template-columns:70px minmax(0,1fr)}.hero{flex-wrap:wrap}.hero canvas{width:36px;height:36px}.hero .count{font-size:18px}.brand svg{width:20px;height:20px}.brand b{font-size:11px}.sidebar{padding-left:4px;padding-right:4px}}
+@media(max-width:720px){.page-switch{padding:0 20px 20px}.hero canvas{width:48px;height:48px}body[data-focus] .hero canvas{width:48px;height:48px}body[data-focus] .hero b{font-size:16px}}

@@ -1,4 +1,6 @@
 import test from 'node:test';
+import {setLanguage} from '../extension/i18n.js';
+setLanguage('zh'); // Error-copy assertions use a fixed locale, independent of the test host.
 import assert from 'node:assert/strict';
 import {defaults,dayKey,collect,eligible,normalizeDomain,excludedUrl,validatePlan,aiPayload,autoCandidates,canAssign} from '../extension/core.js';
 import {organize} from '../extension/ai.js';

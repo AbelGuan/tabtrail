@@ -1,11 +1,11 @@
 {
   "extensionName": {
-    "message": "Tabtrail"
+    "message": "拾签"
   },
   "extensionDescription": {
-    "message": "将标签页整理为主题工作区，在本地回顾浏览记录，可选用 AI 辅助分类。"
+    "message": "整理标签页与书签，在本地回顾浏览记录，可选用 AI 辅助标签分类。"
   },
   "actionTitle": {
-    "message": "打开 Tabtrail 侧边栏"
+    "message": "打开拾签侧边栏"
   }
 }

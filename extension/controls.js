@@ -8,7 +8,7 @@ export function iconButton(icon,label,cls='') {
 }
 export function fillWorkspaceSelect(select,input,names,current='') {
   const values=[...new Set([...names,...(current?[current]:[])])];
-  select.replaceChildren(...values.map(name=>new Option(workspaceLabel(name),name)),new Option(t('＋新建工作区…'),''));
+  select.replaceChildren(...values.map(name=>new Option(workspaceLabel(name),name)),new Option(t('＋新建分类…'),''));
   select.value=current || values[0] || '';
   input.value='';
   const toggle=()=>{input.hidden=select.value!=='';input.required=!input.hidden;if(!input.hidden)input.focus();};

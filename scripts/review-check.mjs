@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE||'playwright');
 const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
- const page=await browser.newPage({viewport:{width:1400,height:1100}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const page=await browser.newPage({locale:'zh-CN',viewport:{width:1400,height:1100}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(`${process.env.PREVIEW_URL||'http://127.0.0.1:4188'}/dashboard.html#review`);
  await page.locator('.rv-hour').first().waitFor();
  assert.ok(await page.locator('.rv-swim-segment').count()>0);assert.ok(await page.locator('.rv-swim-links path').count()>0);
@@ -16,7 +16,7 @@ try{
  for(const width of [390,320]){await page.setViewportSize({width,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
  await page.setViewportSize({width:1400,height:1100});await page.getByRole('button',{name:'详细记录',exact:true}).click();
  await page.locator('.rv-stop-button[aria-expanded=true]').click();assert.equal(await page.locator('.rv-hour').count(),24);assert.ok(await page.locator('.rv-stop').count()<=6);assert.equal(await page.locator('.rv-pages').count(),0);
- await page.getByRole('button',{name:'工作区',exact:true}).last().click();assert.match(await page.locator('.rv-donut').getAttribute('aria-label'),/开发|音乐|旅行/);
+ await page.getByRole('button',{name:'工作区',exact:true}).last().click();assert.match(await page.locator('.rv-stackbar').getAttribute('aria-label'),/开发|音乐|旅行/);
  await page.getByRole('button',{name:'网站',exact:true}).click();
  await page.locator('.rv-stop-button').first().click();assert.equal(await page.locator('.rv-stop-button[aria-expanded=true]').count(),1);assert.ok(await page.locator('.rv-page').count()<=6);
  await page.locator('.rv-hour[data-hour="10"]').click();assert.equal(await page.locator('.rv-hour[aria-pressed=true]').getAttribute('data-hour'),'10');assert.equal(await page.locator('.rv-page').count(),0);
@@ -24,7 +24,7 @@ try{
  await page.getByRole('button',{name:'整小时',exact:true}).click();await page.locator('.rv-hour[data-hour="9"]').click();
  await page.screenshot({path:'docs/review-desktop.png',fullPage:true});
  for(const width of [390,320]){await page.setViewportSize({width,height:900});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`overflow at ${width}`);if(width===390)await page.screenshot({path:'docs/review-mobile.png',fullPage:true});}
- await page.locator('#theme-toggle').click();assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ await page.locator('#more-menu').evaluate(e=>e.open=true);await page.locator('[data-theme-choice][aria-pressed=false]').click();assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await page.setViewportSize({width:1400,height:1100});await page.screenshot({path:'docs/review-classic.png',fullPage:true});
  // A real twelve-hour volume, rather than checking only a short demo.
  await page.evaluate(async()=>{
@@ -41,7 +41,7 @@ try{
  await page.locator('.rv-hour[data-hour="0"]').click();assert.match(await page.locator('.rv-journey').textContent(),/没有采集/);
  await page.locator('#day').fill('2000-01-01');assert.match(await page.locator('#review-dashboard').textContent(),/尚未采集/);assert.equal(await page.locator('.rv-hour').count(),0);
  // A panel left open overnight updates date limits and keeps explicit history choices.
- const overnight=await browser.newPage();
+ const overnight=await browser.newPage({locale:'zh-CN'});
  await overnight.clock.install({time:new Date(2026,8,20,23,59)});
  await overnight.goto(`${process.env.PREVIEW_URL||'http://127.0.0.1:4188'}/dashboard.html#review`);
  await overnight.locator('.rv-hour').first().waitFor();

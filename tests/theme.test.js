@@ -25,5 +25,5 @@ test('cross-window changes and cleared preferences update the mode',()=>{
  const app=boot({dark:true});app.storage('light');assert.equal(app.data.colorScheme,'light');app.storage('dark','irrelevant');assert.equal(app.data.colorMode,'light');app.storage('dark','atlas-color-mode-v1',{});assert.equal(app.data.colorMode,'light');app.storage(null,null);assert.equal(app.data.colorMode,'system');assert.equal(app.data.colorScheme,'dark');
 });
 test('invalid or unavailable storage falls back to system; switching still works',()=>{
- assert.equal(boot({saved:'invalid'}).data.colorMode,'system');const app=boot({blocked:true,dark:true});assert.equal(app.data.colorScheme,'dark');assert.equal(app.window.atlasColorMode.set('light'),false);assert.equal(app.data.colorScheme,'light');assert.equal(app.data.theme,'rounded');
+ assert.equal(boot({saved:'invalid'}).data.colorMode,'system');const app=boot({blocked:true,dark:true});assert.equal(app.data.colorScheme,'dark');assert.equal(app.window.atlasColorMode.set('light'),false);assert.equal(app.data.colorScheme,'light');assert.equal(app.data.theme,'offset');
 });

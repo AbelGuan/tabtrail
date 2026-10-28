@@ -1,11 +1,11 @@
 {
   "extensionName": {
-    "message": "Tabtrail"
+    "message": "Pickmark"
   },
   "extensionDescription": {
-    "message": "Organize tabs into workspaces, review browsing locally, and optionally classify pages with AI."
+    "message": "Organize tabs and bookmarks, review browsing locally, and optionally classify tabs with AI."
   },
   "actionTitle": {
-    "message": "Open the Tabtrail side panel"
+    "message": "Open the Pickmark side panel"
   }
 }

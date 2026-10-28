@@ -1,7 +1,15 @@
 import {english} from './translations.js';
 export const LANGUAGE_KEY='atlas-language-v1';
-let language='zh';
-try { language=globalThis.localStorage?.getItem(LANGUAGE_KEY)==='en'?'en':'zh'; } catch {}
+export function preferredLanguage(saved,systemLanguage){
+ if(saved==='zh'||saved==='en')return saved;
+ return /^zh(?:[-_]|$)/i.test(systemLanguage||'zh')?'zh':'en';
+}
+export function systemLanguage(){
+ return globalThis.chrome?.i18n?.getUILanguage?.()||globalThis.navigator?.language||'zh';
+}
+let savedLanguage;
+try { savedLanguage=globalThis.localStorage?.getItem(LANGUAGE_KEY); } catch {}
+let language=preferredLanguage(savedLanguage,systemLanguage());
 export const getLanguage=()=>language;
 export const locale=()=>language==='en'?'en-US':'zh-CN';
 export function setLanguage(value){language=value==='en'?'en':'zh';}

@@ -2,9 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {english} from '../extension/translations.js';
-import {t,setLanguage,getLanguage,workspaceLabel} from '../extension/i18n.js';
+import {t,setLanguage,getLanguage,workspaceLabel,preferredLanguage} from '../extension/i18n.js';
 import {UNGROUPED,defaults,classificationContext,validatePlan} from '../extension/core.js';
 import {organize} from '../extension/ai.js';
+test('first-run language follows the system while saved choices take priority',()=>{
+ for(const locale of ['zh-CN','zh-TW','zh-Hant','zh_HK'])assert.equal(preferredLanguage(null,locale),'zh');
+ for(const locale of ['en-US','en-GB','ja-JP','fr-FR'])assert.equal(preferredLanguage(null,locale),'en');
+ assert.equal(preferredLanguage('zh','en-US'),'zh');
+ assert.equal(preferredLanguage('en','zh-CN'),'en');
+ assert.equal(preferredLanguage('invalid','en-US'),'en');
+ assert.equal(preferredLanguage(null,undefined),'zh');
+});
 test('language changes display labels without changing storage values or interpolated user text',()=>{
  try {
   setLanguage('en');assert.equal(workspaceLabel(UNGROUPED),'Unsorted');

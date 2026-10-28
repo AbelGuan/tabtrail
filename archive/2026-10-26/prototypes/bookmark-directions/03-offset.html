@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>拾签 · OFFSET 完整原型</title>
+<link rel="stylesheet" href="offset-app.css">
+</head>
+<body>
+<div class="app">
+ <aside class="rail" id="rail" aria-label="主导航">
+  <button class="brand" id="brand" aria-label="返回标签工作区"><span class="brand-logo"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="pm-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A3A3A"/><stop offset="1" stop-color="#0A0A0A"/></linearGradient><linearGradient id="pm-pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D9D9D6"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#pm-bg)"/><g transform="translate(0 -3)"><rect x="9" y="35" width="46" height="20" rx="6" fill="url(#pm-pg)"/><g transform="rotate(-8 32 26)"><path d="M14 33q3.5 0 3.5-3.5V23q0-5 5-5h19q5 0 5 5v6.5q0 3.5 3.5 3.5z" fill="#fff"/><path d="M36 18h7v12l-3.5-2.6L36 30z" fill="#111"/></g></g></svg></span><span class="brand-text"><span class="brand-word">拾签</span><span class="brand-cn mono">PICKMARK</span></span></button>
+  <p class="edition mono">YOUR PERSONAL INTERNET</p><nav id="nav"></nav>
+  <div class="rail-bottom"><div class="archive-mark" aria-hidden="true">03<span>OFFSET</span></div><div class="rail-footer"><div><p>整理思路，留下灵感。</p><small class="mono">PROTOTYPE / VOL. 003</small></div><button id="rail-about" aria-label="关于这版设计"></button></div></div><button class="tool rail-close" id="rail-close" aria-label="关闭导航"></button>
+ </aside>
+ <div class="overlay" id="rail-overlay" hidden></div>
+ <header class="topbar"><button class="tool mobile-menu" id="menu" aria-label="打开导航" aria-expanded="false"></button><div class="mode-switch" role="group" aria-label="切换内容来源"><button class="mode active" data-mode="tabs" aria-pressed="true"><span class="mode-number mono">01</span><strong>标签页</strong><sup class="mono">14</sup></button><button class="mode" data-mode="bookmarks" aria-pressed="false"><span class="mode-number mono">02</span><strong>书签</strong><sup class="mono">16</sup></button></div><span class="top-title" id="top-title" aria-hidden="true"></span><span class="top-caption mono">OFFSET / THE FULL EDITION</span><div class="top-tools"><button class="search-button" id="search" aria-label="搜索当前面板"><span>寻找</span><span class="key mono">⌘ K</span></button><span class="divider"></span><button class="tool" id="theme" aria-label="切换深色主题"></button><button class="tool help-tool" id="settings" aria-label="原型设置"></button></div></header>
+ <main class="workspace" id="workspace"></main>
+ <footer class="statusbar mono" id="statusbar" aria-label="状态栏"></footer>
+</div>
+<div class="scrim-mobile" id="preview-overlay"></div>
+<dialog id="dialog"></dialog>
+<dialog class="command" id="command"><div class="search-head"><span id="search-glyph"></span><input id="query" type="search" placeholder="搜索标题、网站或分类" aria-label="搜索模拟页面" autocomplete="off"><button class="tool" id="command-close" aria-label="关闭搜索"></button></div><div class="search-output" id="search-output"></div><div class="command-foot mono"><span>SEARCH THIS COLLECTION</span><span>ENTER 筛选 / ESC 关闭</span></div></dialog>
+<div class="toast" id="toast" hidden role="status"></div>
+<script src="offset-app.js"></script>
+</body>
+</html>
+

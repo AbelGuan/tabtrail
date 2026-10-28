@@ -1,8 +1,9 @@
 import {defaults,eligible} from './core.js?v=20260917-15';
 import {advanceActivity} from './activity.js';
+import {writeLocal} from './storage-budget.js';
 export function activityWorker(serial) {
  const supported=!!(chrome.idle&&chrome.alarms&&chrome.windows.onFocusChanged);
- async function sample({mediaMessage,reset=false,stop=false}={}) {
+ async function sample({mediaMessage,reset=false,stop=false,commit=true}={}) {
   await chrome.storage.local.setAccessLevel({accessLevel:'TRUSTED_CONTEXTS'});
   const now=Date.now();
   const data=await chrome.storage.local.get(['config','records','visits','activityCursor','trackingSince']);
@@ -36,10 +37,12 @@ export function activityWorker(serial) {
   const previous=!reset&&data.activityCursor?.run===run?data.activityCursor:null;
   const result=advanceActivity(data.visits||[],previous,page,now,config);
   const trackingSince=data.trackingSince||(supported&&config.recording?now:null);
-  await chrome.storage.local.set({visits:result.visits,activityCursor:{...result.cursor,run},trackingSince});
-  return {visits:result.visits,trackingSince};
+  const patch={visits:result.visits,activityCursor:{...result.cursor,run},trackingSince};
+  if(!commit)return patch;
+  const saved=await writeLocal(patch);
+  return {visits:saved.visits,trackingSince};
  }
- async function clear(){await chrome.storage.local.set({visits:[],activityCursor:null,trackingSince:null});await chrome.storage.session.remove(['mediaFrames']);}
+ async function clear(){await writeLocal({visits:[],activityCursor:null,trackingSince:null});await chrome.storage.session.remove(['mediaFrames']);}
  if(supported){
   chrome.idle.setDetectionInterval(300);
   chrome.alarms.create('activity-checkpoint',{periodInMinutes:1});
@@ -52,5 +55,5 @@ export function activityWorker(serial) {
   chrome.runtime.onStartup.addListener(()=>serial(()=>sample({reset:true})));
   chrome.runtime.onInstalled.addListener(()=>serial(()=>sample({reset:true})));
  }
- return {sample,clear,async configure(){const {config}=await chrome.storage.local.get(['config']);if(supported)chrome.idle.setDetectionInterval(config?.idleSeconds||300);return sample();}};
+ return {sample,clear,configureIdle(config){if(supported)chrome.idle.setDetectionInterval(config?.idleSeconds||300);},async configure(){const {config}=await chrome.storage.local.get(['config']);if(supported)chrome.idle.setDetectionInterval(config?.idleSeconds||300);return sample();}};
 }

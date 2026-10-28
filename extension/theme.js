@@ -1,13 +1,7 @@
-// Apply before the stylesheet loads so a saved theme does not flash on reload.
-(() => {
-  let theme = 'rounded';
-  try {
-    if (localStorage.getItem('atlas-theme-v1') === 'classic') theme = 'classic';
-  } catch {}
-  document.documentElement.dataset.theme = theme;
-})();
+// OFFSET is the single layout; old classic/rounded preferences are ignored.
+document.documentElement.dataset.theme = 'offset';
 
-// Color preference is independent of the rounded/classic layout.
+// Apply color preference before the stylesheet loads.
 (() => {
   const key = 'atlas-color-mode-v1';
   const system = window.matchMedia('(prefers-color-scheme: dark)');

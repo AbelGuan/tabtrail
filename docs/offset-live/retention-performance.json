@@ -1,0 +1,20 @@
+{
+  "note": "Synthetic data only; pure cleanup timing, not total browser memory",
+  "results": [
+    {
+      "count": 100,
+      "ms": 1.37,
+      "kept": 40
+    },
+    {
+      "count": 1000,
+      "ms": 1.95,
+      "kept": 340
+    },
+    {
+      "count": 10000,
+      "ms": 12.54,
+      "kept": 3340
+    }
+  ]
+}

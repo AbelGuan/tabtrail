@@ -1,0 +1,195 @@
+{
+  "date": "2026-10-14T01:09:11.309Z",
+  "note": "Synthetic bookmarks; local UI with mocked connect; GC before heap samples; RSS sum includes shared pages and may double count; timings include automation and paint.",
+  "results": [
+    {
+      "count": 100,
+      "panel": 1,
+      "listMs": 85,
+      "gridMs": 45,
+      "list": {
+        "heapMB": 2.09,
+        "nodes": 6357,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 2.09,
+        "nodes": 2883,
+        "listeners": 205
+      },
+      "threePanelHeapMB": null,
+      "browserRSSMB": 1092.9
+    },
+    {
+      "count": 100,
+      "panel": 2,
+      "listMs": 124,
+      "gridMs": 41,
+      "list": {
+        "heapMB": 2.11,
+        "nodes": 6357,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 2.1,
+        "nodes": 2856,
+        "listeners": 205
+      },
+      "threePanelHeapMB": null,
+      "browserRSSMB": 1352.7
+    },
+    {
+      "count": 100,
+      "panel": 3,
+      "listMs": 127,
+      "gridMs": 40,
+      "list": {
+        "heapMB": 2.11,
+        "nodes": 6357,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 2.1,
+        "nodes": 2883,
+        "listeners": 205
+      },
+      "threePanelHeapMB": 6.37,
+      "browserRSSMB": 1611.4
+    },
+    {
+      "count": 100,
+      "afterTenSwitches": {
+        "heapMB": 2.26,
+        "nodes": 6355,
+        "listeners": 805
+      },
+      "errors": []
+    },
+    {
+      "count": 1000,
+      "panel": 1,
+      "listMs": 91,
+      "gridMs": 33,
+      "list": {
+        "heapMB": 2.22,
+        "nodes": 6401,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 2.21,
+        "nodes": 2926,
+        "listeners": 205
+      },
+      "threePanelHeapMB": null,
+      "browserRSSMB": 1094.5
+    },
+    {
+      "count": 1000,
+      "panel": 2,
+      "listMs": 93,
+      "gridMs": 33,
+      "list": {
+        "heapMB": 2.23,
+        "nodes": 6401,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 2.22,
+        "nodes": 2926,
+        "listeners": 205
+      },
+      "threePanelHeapMB": null,
+      "browserRSSMB": 1365.2
+    },
+    {
+      "count": 1000,
+      "panel": 3,
+      "listMs": 91,
+      "gridMs": 46,
+      "list": {
+        "heapMB": 2.23,
+        "nodes": 6401,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 2.22,
+        "nodes": 2927,
+        "listeners": 205
+      },
+      "threePanelHeapMB": 6.74,
+      "browserRSSMB": 1623.5
+    },
+    {
+      "count": 1000,
+      "afterTenSwitches": {
+        "heapMB": 2.39,
+        "nodes": 6399,
+        "listeners": 805
+      },
+      "errors": []
+    },
+    {
+      "count": 10000,
+      "panel": 1,
+      "listMs": 129,
+      "gridMs": 40,
+      "list": {
+        "heapMB": 3.45,
+        "nodes": 6436,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 3.45,
+        "nodes": 2962,
+        "listeners": 205
+      },
+      "threePanelHeapMB": null,
+      "browserRSSMB": 1097.5
+    },
+    {
+      "count": 10000,
+      "panel": 2,
+      "listMs": 144,
+      "gridMs": 43,
+      "list": {
+        "heapMB": 3.47,
+        "nodes": 6436,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 3.46,
+        "nodes": 2935,
+        "listeners": 205
+      },
+      "threePanelHeapMB": null,
+      "browserRSSMB": 1369
+    },
+    {
+      "count": 10000,
+      "panel": 3,
+      "listMs": 134,
+      "gridMs": 37,
+      "list": {
+        "heapMB": 3.47,
+        "nodes": 6436,
+        "listeners": 805
+      },
+      "grid": {
+        "heapMB": 3.46,
+        "nodes": 2962,
+        "listeners": 205
+      },
+      "threePanelHeapMB": 10.43,
+      "browserRSSMB": 1632.2
+    },
+    {
+      "count": 10000,
+      "afterTenSwitches": {
+        "heapMB": 3.63,
+        "nodes": 6434,
+        "listeners": 805
+      },
+      "errors": []
+    }
+  ]
+}

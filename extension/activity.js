@@ -1,13 +1,12 @@
 import {dayKey, eligible} from './core.js?v=20260917-15';
+import {retainByBytes} from './storage-budget.js';
+import {retentionCutoff} from './retention-policy.js';
 export const MAX_GAP = 90_000;
 export const MAX_VISITS = 12000;
 export function retainVisits(visits,config,now=Date.now()) {
- const cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-29);
+ const cutoff=retentionCutoff(config,now);
  const kept=visits.filter(v=>v.day>=dayKey(cutoff)&&eligible(v,config)).slice(-MAX_VISITS);
- // Reserve room for the existing daily records under Chrome's local quota.
- let bytes=0,index=kept.length;
- while(index>0){const size=JSON.stringify(kept[index-1]).length*3;if(bytes+size>4*1024*1024)break;bytes+=size;index--;}
- return kept.slice(index);
+ return retainByBytes(kept);
 }
 // A checkpoint and its accumulated segments are committed together. Unobserved long
 // gaps (sleep, worker interruption) never become estimated browsing time.
@@ -30,11 +29,52 @@ export function advanceActivity(visits,cursor,current,now,config) {
  const same=valid&&cursor.page&&page&&cursor.page.tabId===page.tabId&&cursor.page.url===page.url;
  return {visits:retainVisits(next,config,now),cursor:{at:now,page,chain,visit:same?cursor.visit:crypto.randomUUID()}};
 }
-export function reviewData(visits,day,{from=0,to=1440,urls=null}={}) {
- const midnight=new Date(`${day}T00:00:00`).getTime();
- const endDay=new Date(midnight);endDay.setDate(endDay.getDate()+1);
- const lo=midnight+from*60000,hi=to===1440?endDay.getTime():midnight+to*60000;
- const all=visits.filter(v=>v.day===day&&v.end>lo&&v.start<hi).map(v=>({...v,start:Math.max(lo,v.start),end:Math.min(hi,v.end)}));
+const pad=value=>String(value).padStart(2,'0');
+const clockLabel=date=>`${pad(date.getHours())}:${pad(date.getMinutes())}`;
+let calendarCache;
+function reviewCalendar(day) {
+ const midnight=new Date(`${day}T00:00:00`),next=new Date(midnight);next.setDate(next.getDate()+1);
+ const key=`${day}:${midnight.getTime()}:${next.getTime()}`;
+ if(calendarCache?.key===key)return calendarCache;
+ const hours=[],minutes=[];
+ // Walk actual instants, grouping by local clock hour AND UTC offset. This also
+ // handles half-hour DST changes without inventing missing local times.
+ for(let start=midnight.getTime();start<next.getTime();start+=60000){
+  const date=new Date(start),end=Math.min(start+60000,next.getTime());
+  const h=date.getHours(),offset=date.getTimezoneOffset(),q=Math.floor(date.getMinutes()/15);
+  minutes.push({start,end,minute:h*60+date.getMinutes()});
+  let slot=hours.at(-1);
+  if(!slot||slot.hour!==h||slot.offset!==offset){slot={start,end,hour:h,offset,label:clockLabel(date),quarters:[]};hours.push(slot);}
+  slot.end=end;
+  let part=slot.quarters.at(-1);
+  if(!part||part.quarter!==q){part={start,end,quarter:q,label:clockLabel(date)};slot.quarters.push(part);}
+  part.end=end;
+ }
+ for(const slot of hours){
+  const repeated=hours.filter(h=>h.hour===slot.hour);
+  slot.shortLabel=pad(slot.hour);
+  slot.endLabel=slot.end===next.getTime()?'24:00':clockLabel(new Date(slot.end));
+  if(repeated.length>1){
+   const offset=-slot.offset,zone=`UTC${offset<0?'-':'+'}${pad(Math.floor(Math.abs(offset)/60))}:${pad(Math.abs(offset)%60)}`;
+   slot.label+=` ${zone}`;
+   slot.shortLabel+=repeated.indexOf(slot)===0?'¹':'²';
+  }
+ }
+ calendarCache={key,hours,minutes};return calendarCache;
+}
+export const reviewHours=day=>reviewCalendar(day).hours;
+
+export function reviewData(visits,day,{from=0,to=1440,start,end,urls=null}={}) {
+ const ranges=[];
+ if(start!==undefined&&end!==undefined)ranges.push({start,end});
+ else for(const minute of reviewCalendar(day).minutes){
+  const lo=minute.start+Math.max(0,from-minute.minute)*60000;
+  const hi=minute.end-Math.max(0,minute.minute+1-to)*60000;
+  if(hi<=lo)continue;
+  if(ranges.at(-1)?.end===lo)ranges.at(-1).end=hi;
+  else ranges.push({start:lo,end:hi});
+ }
+ const all=ranges.flatMap(({start:lo,end:hi})=>visits.filter(v=>v.day===day&&v.end>lo&&v.start<hi).map(v=>({...v,start:Math.max(lo,v.start),end:Math.min(hi,v.end)})));
  const shown=all.filter(v=>!urls||urls.has(v.url));
  const sites=new Map(),groups=new Map();
  for(const v of shown){const duration=v.end-v.start;sites.set(v.domain,(sites.get(v.domain)||0)+duration);groups.set(v.group,(groups.get(v.group)||0)+duration);}

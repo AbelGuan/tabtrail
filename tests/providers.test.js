@@ -1,4 +1,6 @@
 import test from 'node:test';
+import {setLanguage} from '../extension/i18n.js';
+setLanguage('zh'); // Keep translated error assertions independent of system language.
 import assert from 'node:assert/strict';
 import {organize,testConnection} from '../extension/ai.js';
 import {PROVIDERS,sessionKeys} from '../extension/providers.js';

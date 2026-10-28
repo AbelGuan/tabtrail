@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {activityWorker} from '../extension/activity-worker.js';
 import {defaults} from '../extension/core.js';
 const event=()=>({listeners:[],addListener(fn){this.listeners.push(fn);}});
-function storage(data){return {async get(keys){return structuredClone(Object.fromEntries(keys.filter(k=>k in data).map(k=>[k,data[k]])));},async set(v){Object.assign(data,structuredClone(v));},async remove(keys){keys.forEach(k=>delete data[k]);},async setAccessLevel(){}};}
+function storage(data){return {async get(keys){return structuredClone(Object.fromEntries((keys===null?Object.keys(data):keys).filter(k=>k in data).map(k=>[k,data[k]])));},async set(v){Object.assign(data,structuredClone(v));},async remove(keys){keys.forEach(k=>delete data[k]);},async setAccessLevel(){}};}
 test('worker honors video, lock, focus, exclusions, restarts and clear with atomic checkpoints',async()=>{
  let now=new Date(2026,8,18,10).getTime();const realNow=Date.now;Date.now=()=>now;
  const local={config:defaults(),records:[]},session={};let focused=true,idle='active';let tab={id:1,url:'https://video.test/',title:'Silent video',active:true};

@@ -69,7 +69,7 @@ README 和许可证已具备，Issue/PR 模板本轮已补。CI 自动检查、�
 公开源码后，别人已可下载源码并加载 `extension/`。若希望提供更方便的安装包：
 
 1. 确认 manifest 和 `package.json` 的版本一致，更新 [版本记录](../CHANGELOG.md)。
-2. 运行测试，然后执行 `npm run package`；它生成 `dist/tabtrail-版本号.zip`。
+2. 运行测试，然后执行 `npm run package`；它生成 `dist/Pickmark-版本号.zip`，附安装更新说明和校验文件。
 3. 解压该 ZIP 并在 Chrome 加载，检查压缩包根目录直接有 `manifest.json`，再验证基本使用。
 4. 确保本地打包源码与 GitHub 上准备发布的提交一致。
 5. 在仓库 Releases 创建版本，选择对应提交并创建版本标签，例如首次 `v0.1.0`。当前实验性版本应说明限制，可标记为 pre-release。

@@ -13,6 +13,14 @@ function fixture(count=451){
  return {state,send};
 }
 const plan=records=>({assignments:records.map(r=>({id:r.id,group:'研究'})),rules:[]});
+test('open-tab classification never sends stale pages when privacy changes while retrieving the key',async()=>{
+ for(const change of [s=>{s.config.excluded=['example.com'];s.records=[];},s=>{s.config.recording=false;},s=>{s.records=[];s.config.recording=false;},s=>{s.records=[];},s=>{s.hasKey=false;},s=>{s.records[0].manualGroup=true;}]){
+  const f=fixture(2);let requests=0;
+  const send=async m=>{const response=await f.send(m);if(m.type==='getKey')change(f.state);return response;};
+  const result=await organizeOpenTabs({send,request:async rows=>{requests++;return plan(rows);}});
+  assert.equal(requests,0);assert.ok(['changed','paused','no-key'].includes(result.reason));
+ }
+});
 test('one click handles 451 open pages in three batches and reuses existing workspaces',async()=>{
  const {state,send}=fixture();const sizes=[];
  const result=await organizeOpenTabs({send,request:async(records,rules,key,model,signal,names)=>{sizes.push(records.length);if(sizes.length>1)assert.ok(names.includes('研究'));return plan(records);}});
@@ -37,6 +45,22 @@ test('changed settings discard late results; hidden state stops additional batch
  const result=await organizeOpenTabs({send,request:async records=>{state.config.provider='openai';return plan(records);}});
  assert.equal(result.reason,'changed');assert.ok(state.records.every(r=>r.group==='待整理'));
  assert.equal((await organizeOpenTabs({send,shouldContinue:()=>false,request:()=>assert.fail()})).reason,'stopped');
+});
+test('Key lifecycle changes discard late tab AI and its suggested rules',async()=>{
+ const f=fixture(2);
+ const result=await organizeOpenTabs({...f,request:async rows=>{
+  f.state.config.settingsRevision=2;
+  return {...plan(rows),rules:[{keyword:'page',group:'Old AI'}]};
+ }});
+ assert.equal(result.reason,'changed');assert.equal(result.ai,0);assert.deepEqual(result.suggestions,[]);
+ assert.ok(f.state.records.every(r=>r.group==='待整理'));
+});
+test('a commit conflict after the final refresh does not report stale AI suggestions',async()=>{
+ const f=fixture(1);
+ const send=async message=>message.type==='assign'?false:f.send(message);
+ const result=await organizeOpenTabs({send,request:async rows=>({...plan(rows),rules:[{keyword:'page',group:'Stale'}]})});
+ assert.equal(result.reason,'changed');assert.equal(result.ai,0);assert.deepEqual(result.suggestions,[]);
+ assert.equal(f.state.records[0].group,'待整理');
 });
 test('AI receives applied preferences and discards results when preferences change',async()=>{
  const {state,send}=fixture(2);state.preference='按项目分类';

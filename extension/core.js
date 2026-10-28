@@ -1,5 +1,12 @@
 import {t,getLanguage} from './i18n.js';
+import {retainProtected,HISTORY_BYTES} from './storage-budget.js';
+import {retentionCutoff,retentionDays} from './retention-policy.js';
 export const UNGROUPED = '待整理';
+// Historical snapshots are independent of today's ownership and activity visits.
+export function historyCandidates(records,day,config) {
+  return records.filter(r=>r.day===day&&!r.manualGroup&&r.group===UNGROUPED&&
+    (!r.snapshotGroup||r.snapshotGroup===UNGROUPED)&&eligible(r,config));
+}
 // Migrate legacy reading-state fields without changing page or workspace data.
 export function removeReadingStatus(records) {
   return records.map(record => {
@@ -8,11 +15,11 @@ export function removeReadingStatus(records) {
     return page;
   });
 }
-export const defaults = () => ({recording: true, idleSeconds: 300, savedPreference: '', savePreference: false, excluded: [], rules: [], provider: 'deepseek', model: 'deepseek-flash', providerModels: {}, workspaceOrder: [], workspaces: [], workspaceRevision: 0});
+export const defaults = () => ({recording: true, retentionDays: 30, idleSeconds: 300, savedPreference: '', savePreference: false, excluded: [], rules: [], provider: 'deepseek', model: 'deepseek-flash', providerModels: {}, workspaceOrder: [], workspaces: [], workspaceRevision: 0});
 // Compare only fields edited by the settings form; unrelated rule edits are safe.
 export function settingsSignature(config) {
   const c={...defaults(),...config};
-  return JSON.stringify([c.recording,c.excluded,c.provider,c.model,c.idleSeconds]);
+  return JSON.stringify([c.recording,c.excluded,c.provider,c.model,c.idleSeconds,retentionDays(c),c.settingsRevision||0]);
 }
 export function assertSettingsCurrent(config,expected) {
   if(expected!==settingsSignature(config))throw new Error(t('设置已在其他窗口更新，请关闭并重新打开设置后再保存。'));
@@ -55,11 +62,19 @@ export function collect(records, tabs, config, time = Date.now(), activeId = nul
     item.lastSeen = time;
     if (tab.id === activeId) { item.activations++; item.lastActivated = time; }
   }
-  return retainRecords(records,config,time);
+  const retained=retainRecords(records,config,time);
+  if(retained.length===records.length)return retained;
+  // When open pages exceed the budget, use a stable tab order. Otherwise each
+  // refresh appends evicted pages and evicts the pages just classified by AI.
+  const tabOrder=new Map(tabs.map((tab,index)=>[tab.url,index]));
+  return retainRecords([...records].sort((a,b)=>a.day.localeCompare(b.day)||
+    (a.day===day?(tabOrder.get(a.url)??-1)-(tabOrder.get(b.url)??-1):0)),config,time);
 }
 export function retainRecords(records,config,time=Date.now()) {
-  const cutoff = new Date(time); cutoff.setDate(cutoff.getDate()-29);
-  return records.filter(r => r.day >= dayKey(cutoff) && !excludedUrl(r.url, config.excluded)).slice(-5000);
+  const cutoff = retentionCutoff(config,time);
+  const today=dayKey(time),kept=records.filter(r => r.day >= dayKey(cutoff) && !excludedUrl(r.url, config.excluded));
+  const manual=r=>r.day===today&&r.manualGroup;
+  return retainProtected(kept,HISTORY_BYTES,manual,5000);
 }
 export function validatePlan(raw, allowedIds) {
   if (!raw || !Array.isArray(raw.assignments) || raw.assignments.length !== allowedIds.length) throw new Error(t('AI 返回的分类数量不完整，请重试。'));
@@ -132,13 +147,23 @@ export function manageWorkspace(data, message) {
   const name=typeof message.name==='string'?message.name.trim():'';
   if(!name || name.length>40 || name===UNGROUPED)throw new Error(t('工作区名称须为 1–40 字，不能使用系统名称「待整理」。'));
   const action=message.action;
-  if(!['create','rename','delete'].includes(action))throw new Error(t('未知工作区操作。'));
+  if(!['create','rename','delete','icon'].includes(action))throw new Error(t('未知工作区操作。'));
   if(action==='create' && names.includes(name))throw new Error(t('此工作区已存在。'));
   if(action!=='create' && !names.includes(name))throw new Error(t('工作区已不存在，请刷新。'));
   const target=typeof message.target==='string'?message.target.trim():'';
   if(action==='rename' && (!target || target.length>40 || target===UNGROUPED || names.includes(target)))throw new Error(t('请使用新的工作区名称（1–40 字），不能与已有工作区重名。'));
   if(action==='delete' && (target===name || (target!==UNGROUPED&&!names.includes(target))))throw new Error(t('请选择一个有效的迁移工作区。'));
   const config={...data.config,workspaceRevision:revision+1};
+  const icons=new Map(Object.entries(data.config.workspaceIcons||{}));
+  if(action==='icon'){
+    if(!['auto','code','idea','components','map','team','book','music','tools','inbox','folder'].includes(message.icon))throw new Error(t('未知工作区操作。'));
+    if(message.icon==='auto')icons.delete(name);else icons.set(name,message.icon);
+    config.workspaceIcons=Object.fromEntries(icons);
+    return {...data,config};
+  }
+  if(action==='rename'&&icons.has(name))icons.set(target,icons.get(name));
+  if(action==='rename'||action==='delete')icons.delete(name);
+  config.workspaceIcons=Object.fromEntries(icons);
   config.workspaces=action==='create'?[...names,name]:action==='rename'?names.map(n=>n===name?target:n):names.filter(n=>n!==name);
   config.workspaceOrder=(data.config.workspaceOrder||[]).flatMap(n=>n!==name?[n]:action==='rename'?[target]:[]);
   if(action==='create')return {...data,config};
@@ -166,5 +191,5 @@ export function applyLocalRules(records, rules, ids) {
 
 // Used both before requests and by the serialized worker before committing results.
 export function classificationContext(config,preference='') {
-  return JSON.stringify([config.provider,config.model,config.rules,config.excluded,config.workspaceRevision||0,preference,getLanguage()]);
+  return JSON.stringify([config.provider,config.model,config.rules,config.excluded,config.workspaceRevision||0,preference,getLanguage(),retentionDays(config),config.historyRevision||0,config.settingsRevision||0]);
 }
